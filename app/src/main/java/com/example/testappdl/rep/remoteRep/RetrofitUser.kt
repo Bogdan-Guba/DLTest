@@ -2,6 +2,7 @@ package com.example.testappdl.rep.remoteRep
 
 
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -25,7 +26,7 @@ data class Dob(
 
 interface ApiService {
     @GET("api/")
-    suspend fun getUser(): Call<UserRetrofit>
+    suspend fun getUser(): Response<UserRetrofit>
 }
 
 private const val BASE_URL = "https://randomuser.me/api/"

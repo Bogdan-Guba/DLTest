@@ -29,14 +29,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import com.example.testappdl.NavRoutes.DETAIL_SCREEN
 import com.example.testappdl.rep.User
 import com.example.testappdl.ui.theme.TestAppDLTheme
+import com.example.testappdl.ui.viewModel.MainViewModel
 
 
 @Composable
-fun MainScreen(navController: NavController){
+fun MainScreen(
+    navigate: (String) -> Unit,
+    //viewModel:MainViewModel=hiltViewModel()
+)
+{
     var themeChange by rememberSaveable { mutableStateOf(true) }
     Surface(modifier = Modifier
         .fillMaxSize()
@@ -76,7 +80,9 @@ fun MainScreen(navController: NavController){
                 }*/
                 var user: User = User("Bogdan","Guba", 21)
                 item{
-                    UserItem(user,navController)
+                    UserItem(user) {
+                        navigate(DETAIL_SCREEN)
+                    }
                 }
 
             } }
@@ -85,12 +91,12 @@ fun MainScreen(navController: NavController){
 }
 
 @Composable
-fun UserItem(user: User, navController: NavController) {
+fun UserItem(user: User, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clickable { navController.navigate("detail_screen")}
+            .clickable { onClick.invoke()}
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = "Name:${user.name}")
@@ -105,6 +111,6 @@ fun UserItem(user: User, navController: NavController) {
 @Preview(showBackground = true)
 fun PreviewMainScreen(){
     TestAppDLTheme {
-        MainScreen(navController = rememberNavController())
+        MainScreen({})
     }
 }

@@ -9,18 +9,30 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.testappdl.NavRoutes.DETAIL_SCREEN
+import com.example.testappdl.NavRoutes.MAIN_SCREEN
+import com.example.testappdl.NavRoutes.REGISTER_SCREEN
 import com.example.testappdl.ui.screens.DetailScreen
 import com.example.testappdl.ui.screens.LoginScreen
 import com.example.testappdl.ui.screens.MainScreen
 import com.example.testappdl.ui.theme.TestAppDLTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+object NavRoutes {
+    const val REGISTER_SCREEN = "register_screen"
+    const val MAIN_SCREEN = "main_screen"
+    const val DETAIL_SCREEN = "detail_screen"
+}
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             TestAppDLTheme {
-                Navigation();
+                Navigation()
+
             }
         }
     }
@@ -28,19 +40,35 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Navigation(){
-    val NavHostController = rememberNavController()
-    NavHost(navController = NavHostController, startDestination = "register_screen"){
-        composable("register_screen"){LoginScreen(NavHostController)}
-        composable("main_screen") { MainScreen(NavHostController) }
-        composable("detail_screen") { DetailScreen(NavHostController)
+    val navHostController = rememberNavController()
+
+    fun navigateTo(route:String){
+        navHostController.navigate(route)
+    }
+    fun navigateToWithoutPopUP(route:String){
+        navHostController.navigate(route){
+            popUpTo(0)
         }
     }
+
+
+    fun popBackStack(){
+        navHostController.popBackStack()
+    }
+
+    NavHost(navController = navHostController, startDestination = REGISTER_SCREEN){
+        composable(REGISTER_SCREEN){ LoginScreen(navigate = { route -> navigateToWithoutPopUP(route) } ) }
+        composable(MAIN_SCREEN) { MainScreen(navigate = { route -> navigateTo(route) }) }
+        composable(DETAIL_SCREEN) { DetailScreen(navigate = { route -> navigateTo(route) }) }
+    }
+
 }
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewMainScreen() {
     TestAppDLTheme {
-        LoginScreen(navController = rememberNavController())
+        Navigation()
     }
 }
 

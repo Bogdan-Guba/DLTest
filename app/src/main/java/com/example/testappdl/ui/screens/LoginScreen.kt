@@ -1,11 +1,9 @@
 package com.example.testappdl.ui.screens
 
-
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
-
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,15 +20,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import com.example.testappdl.NavRoutes.MAIN_SCREEN
 import com.example.testappdl.ui.theme.TestAppDLTheme
+import com.example.testappdl.ui.viewModel.DetailViewModel
+import com.example.testappdl.ui.viewModel.LoginScreenViewModel
 
 @Composable
-fun LoginScreen(navController: NavController){
+fun LoginScreen(
+    navigate: (String) -> Unit,
+    //viewModel: LoginScreenViewModel = hiltViewModel()
+){
     var login by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var error by rememberSaveable { mutableStateOf("TEXT ERRPRORS") }
@@ -70,7 +71,7 @@ fun LoginScreen(navController: NavController){
 
             Button(
                 modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
-                onClick = { navController.navigate("main_screen") }) {
+                onClick = { navigate(MAIN_SCREEN) }) {
                 Text("To the next Screen")
             }
 
@@ -86,7 +87,7 @@ fun LoginScreen(navController: NavController){
 @Preview(showBackground = true)
 fun PreviewLoginScreen(){
     TestAppDLTheme {
-        LoginScreen(navController = rememberNavController())
+        LoginScreen({})
 
     }
 }
