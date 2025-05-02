@@ -1,11 +1,14 @@
 package com.example.testappdl
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -16,6 +19,7 @@ import com.example.testappdl.ui.screens.DetailScreen
 import com.example.testappdl.ui.screens.LoginScreen
 import com.example.testappdl.ui.screens.MainScreen
 import com.example.testappdl.ui.theme.TestAppDLTheme
+import com.example.testappdl.ui.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 object NavRoutes {
@@ -26,8 +30,12 @@ object NavRoutes {
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.e("TEST","NEWActivity")
         enableEdgeToEdge()
         setContent {
             TestAppDLTheme {
@@ -58,7 +66,7 @@ fun Navigation(){
 
     NavHost(navController = navHostController, startDestination = REGISTER_SCREEN){
         composable(REGISTER_SCREEN){ LoginScreen(navigate = { route -> navigateToWithoutPopUP(route) } ) }
-        composable(MAIN_SCREEN) { MainScreen(navigate = { route -> navigateTo(route) }) }
+        composable(MAIN_SCREEN) { MainScreen(navigate = { route -> navigateTo(route, ) }) }
         composable(DETAIL_SCREEN) { DetailScreen(navigate = { route -> navigateTo(route) }) }
     }
 

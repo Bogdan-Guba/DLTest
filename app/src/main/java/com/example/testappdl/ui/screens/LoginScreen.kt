@@ -30,7 +30,7 @@ import com.example.testappdl.ui.viewModel.LoginScreenViewModel
 @Composable
 fun LoginScreen(
     navigate: (String) -> Unit,
-    //viewModel: LoginScreenViewModel = hiltViewModel()
+    //viewModel: LoginScreenViewModel
 ){
     var login by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }

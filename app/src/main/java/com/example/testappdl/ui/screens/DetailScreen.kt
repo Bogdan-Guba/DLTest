@@ -31,9 +31,9 @@ import com.example.testappdl.ui.viewModel.DetailViewModel
 @Composable
 fun DetailScreen(
     navigate: (String) -> Unit,
-   // viewModel: DetailViewModel = hiltViewModel()
+    //viewModel: DetailViewModel
 ) {
-    //var user: User by rememberSaveable { mutableStateOf(User("Bogdan",0)) }
+
     val user: User =User("Bogdan","Guba", 21)
     Surface(modifier = Modifier
         .fillMaxSize()

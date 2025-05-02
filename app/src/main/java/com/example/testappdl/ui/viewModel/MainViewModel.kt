@@ -1,27 +1,27 @@
 package com.example.testappdl.ui.viewModel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.testappdl.rep.UserRepository
 import com.example.testappdl.rep.User
 import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val rep : UserRepository
+): ViewModel() {
+    private var userData = rep.users
 
-class MainViewModel:ViewModel() {
-    private var _user = MutableLiveData<User>()
-
-    private var _users = MutableLiveData<List<User>>()
-
-
-
-    fun setUsers(users:List<User>){
-        _users.value=users
+    fun loadUser() {
+        viewModelScope.launch {
+            rep.getUnificatedUsers()
+        }
     }
-
-    fun setUser(user:User){
-        _user.value=user
-    }
-
-
 
 
 }

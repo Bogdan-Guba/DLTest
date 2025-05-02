@@ -2,6 +2,7 @@ package com.example.testappdl.rep
 
 import com.example.testappdl.rep.localrep.entity.UserRoom
 import com.example.testappdl.rep.remoteRep.UserRetrofit
+import javax.inject.Inject
 
 data class User(
     val name:String,
@@ -15,6 +16,16 @@ interface ConvertToUser{
     }
 
     fun retrofitToData(userRetrofit: UserRetrofit):User{
+        return User(userRetrofit.name.first, userRetrofit.name.last, userRetrofit.dob.age)
+    }
+}
+
+class ConvertToUserImpl @Inject constructor() : ConvertToUser {
+    override fun roomToData(userRoom: UserRoom): User {
+        return User(userRoom.firstName, userRoom.lastName, userRoom.age)
+    }
+
+    override fun retrofitToData(userRetrofit: UserRetrofit): User {
         return User(userRetrofit.name.first, userRetrofit.name.last, userRetrofit.dob.age)
     }
 }
