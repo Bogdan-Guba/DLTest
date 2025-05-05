@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
         Log.e("TEST","NEWActivity")
         enableEdgeToEdge()
         setContent {
-            TestAppDLTheme {
+            TestAppDLTheme(colorScheme = darkColorScheme()) {
                 Navigation()
 
             }

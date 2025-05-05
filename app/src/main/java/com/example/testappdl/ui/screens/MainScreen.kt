@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -35,6 +36,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.testappdl.NavRoutes.ADD_TO_DATABASE_SCREEN
 import com.example.testappdl.NavRoutes.DETAIL_SCREEN
 import com.example.testappdl.rep.User
+import com.example.testappdl.ui.theme.DarkColorScheme
+import com.example.testappdl.ui.theme.LightColorScheme
+import com.example.testappdl.ui.theme.TestAppDLTheme
 import com.example.testappdl.ui.viewModel.MainViewModel
 
 
@@ -46,50 +50,57 @@ fun MainScreen(
 
     val users by viewModel.userData.collectAsState()
 
-    var themeChange by rememberSaveable { mutableStateOf(true) }
-    Surface(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(WindowInsets.statusBars.asPaddingValues())
-    ) {
-        Column {
-            Row(modifier = Modifier.fillMaxWidth()) {
-                Button(
-                    onClick = { themeChange = !themeChange },
-                    modifier = Modifier.size(60.dp),
-                    contentPadding = PaddingValues(0.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Refresh,
-                        contentDescription = "Change theme",
-                        modifier = Modifier.size(48.dp)
+    var colorScheme by remember { mutableStateOf(DarkColorScheme) }
+    TestAppDLTheme(colorScheme = colorScheme) {
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(WindowInsets.statusBars.asPaddingValues())
+        ) {
+            Column {
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    Button(
+                        onClick = { if(colorScheme == DarkColorScheme){
+                        colorScheme= LightColorScheme
+                        }else{
+                            colorScheme =DarkColorScheme
+                        }
+                        },
+                        modifier = Modifier.size(60.dp),
+                        contentPadding = PaddingValues(0.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Refresh,
+                            contentDescription = "Change theme",
+                            modifier = Modifier.size(48.dp)
+                        )
+                    }
+                    Spacer(
+                        modifier = Modifier.weight(1f)
                     )
+                    Button(
+                        onClick = { navigate(ADD_TO_DATABASE_SCREEN) },
+                        modifier = Modifier.size(60.dp),
+                        contentPadding = PaddingValues(0.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Add,
+                            contentDescription = "Add user to DB",
+                            modifier = Modifier.size(48.dp)
+                        )
+                    }
+
                 }
-                Spacer(
-                    modifier = Modifier.weight(1f)
-                )
-                Button(
-                    onClick = { navigate(ADD_TO_DATABASE_SCREEN)},
-                    modifier = Modifier.size(60.dp),
-                    contentPadding = PaddingValues(0.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Add,
-                        contentDescription = "Add user to DB",
-                        modifier = Modifier.size(48.dp)
-                    )
+
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    itemsIndexed(items = users) { idx, item ->
+                        UserItem(user = item, onClick = { navigate(DETAIL_SCREEN + "/${idx}") })
+
+                    }
                 }
+
 
             }
-
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                itemsIndexed(items = users) { idx, item ->
-                    UserItem(user = item, onClick = { navigate(DETAIL_SCREEN+"/${idx}") })
-
-                }
-            }
-
-
         }
     }
 }
