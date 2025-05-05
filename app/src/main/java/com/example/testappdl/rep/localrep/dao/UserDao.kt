@@ -7,6 +7,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.testappdl.rep.localrep.entity.UserRoom
 import dagger.Provides
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import retrofit2.Response
 
 
 @Dao
@@ -22,7 +25,7 @@ interface UserDao  {
     }
 
     @Query("SELECT * FROM Users")
-    suspend fun getAll(): MutableList<UserRoom>
+    fun getAll(): Flow<List<UserRoom>>
 
 
 

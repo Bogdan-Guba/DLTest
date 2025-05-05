@@ -15,13 +15,5 @@ import kotlinx.coroutines.launch
 class MainViewModel @Inject constructor(
     private val rep : UserRepository
 ): ViewModel() {
-    private var userData = rep.users
-
-    fun loadUser() {
-        viewModelScope.launch {
-            rep.getUnificatedUsers()
-        }
-    }
-
-
+    var userData = rep.users
 }

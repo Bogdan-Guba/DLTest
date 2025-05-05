@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Refresh
@@ -23,19 +24,18 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.testappdl.NavRoutes.ADD_TO_DATABASE_SCREEN
 import com.example.testappdl.NavRoutes.DETAIL_SCREEN
 import com.example.testappdl.rep.User
-import com.example.testappdl.ui.theme.TestAppDLTheme
 import com.example.testappdl.ui.viewModel.MainViewModel
-import kotlinx.coroutines.coroutineScope
 
 
 @Composable
@@ -43,6 +43,8 @@ fun MainScreen(
     navigate: (String) -> Unit,
     viewModel: MainViewModel = hiltViewModel()
 ) {
+
+    val users by viewModel.userData.collectAsState()
 
     var themeChange by rememberSaveable { mutableStateOf(true) }
     Surface(
@@ -67,13 +69,13 @@ fun MainScreen(
                     modifier = Modifier.weight(1f)
                 )
                 Button(
-                    onClick = { themeChange = !themeChange },
+                    onClick = { navigate(ADD_TO_DATABASE_SCREEN)},
                     modifier = Modifier.size(60.dp),
                     contentPadding = PaddingValues(0.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Add,
-                        contentDescription = "Change theme",
+                        contentDescription = "Add user to DB",
                         modifier = Modifier.size(48.dp)
                     )
                 }
@@ -81,8 +83,8 @@ fun MainScreen(
             }
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(items = viewModel.userData.value.toList()) { item ->
-                    UserItem(user = item, onClick = { navigate(DETAIL_SCREEN) })
+                itemsIndexed(items = users) { idx, item ->
+                    UserItem(user = item, onClick = { navigate(DETAIL_SCREEN+"/${idx}") })
 
                 }
             }

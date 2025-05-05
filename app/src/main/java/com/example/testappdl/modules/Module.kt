@@ -3,12 +3,9 @@ package com.example.testappdl.modules
 
 import android.content.Context
 import androidx.room.Room
-import com.example.testappdl.rep.ConvertToUser
-import com.example.testappdl.rep.ConvertToUserImpl
 import com.example.testappdl.rep.localrep.dao.UserDao
 import com.example.testappdl.rep.localrep.database.UserDatabase
 import com.example.testappdl.rep.remoteRep.ApiService
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,7 +24,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://your-api-url.com/")
+            .baseUrl("https://randomuser.me")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -58,12 +55,4 @@ object DatabaseModule {
     fun provideUserDao(database: UserDatabase): UserDao {
         return database.productDao()
     }
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-interface ConvertModule {
-
-    @Binds
-    fun bindConverter(impl: ConvertToUserImpl): ConvertToUser
 }
