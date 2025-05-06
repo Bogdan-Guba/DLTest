@@ -1,4 +1,4 @@
-package com.example.testappdl.rep.localrep.entity
+package com.example.testappdl.model.User.localrep.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -9,8 +9,7 @@ data class UserRoom(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ID")
     val ID:Int=0,
-    @ColumnInfo(name =" First") val firstName:String,
-    @ColumnInfo(name =" Last") val lastName:String,
-    @ColumnInfo(name = "Age") val age:Int
+    @ColumnInfo(name = "Name" ) val name:String,
+    @ColumnInfo(name = "Surname" ) val surname:String,
+    @ColumnInfo(name = "Age" ) val age:Int
 )
-

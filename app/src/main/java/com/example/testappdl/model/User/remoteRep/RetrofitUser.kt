@@ -1,9 +1,7 @@
-package com.example.testappdl.rep.remoteRep
+package com.example.testappdl.model.User.remoteRep
 
 
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -46,5 +44,3 @@ interface ApiService {
         @Query("seed") seed: String = "test"
     ): Response<RandomUserResponse>
 }
-
-

@@ -1,6 +1,5 @@
 package com.example.testappdl.ui.screens
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -14,7 +13,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -27,8 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.testappdl.NavRoutes.MAIN_SCREEN
 import com.example.testappdl.ui.theme.TestAppDLTheme
-import com.example.testappdl.ui.viewModel.DetailViewModel
-import com.example.testappdl.ui.viewModel.LoginScreenViewModel
+import com.example.testappdl.viewModel.LoginScreenViewModel
 
 
 @Composable
@@ -39,10 +36,10 @@ fun LoginScreen(
 
     var login by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
-    var error by rememberSaveable { mutableStateOf("TEXT ERRPRORS") }
-    val colorScheme by viewModel.colorScheme.collectAsState()
+    var error by rememberSaveable { mutableStateOf("TEXT ERRORS") }
 
-    TestAppDLTheme(colorScheme = colorScheme) {
+
+
         Surface(
             modifier = Modifier
                 .fillMaxSize()
@@ -87,7 +84,7 @@ fun LoginScreen(
 
             }
         }
-    }
+
 }
 
 
