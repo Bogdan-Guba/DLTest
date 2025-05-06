@@ -45,10 +45,7 @@ class MainActivity : ComponentActivity () {
         Log.e("TEST","NEWActivity")
         enableEdgeToEdge()
         setContent {
-//            TestAppDLTheme() {
-//            Navigation()
-//
-//       }
+
             MainScreen()
         }
     }
@@ -60,9 +57,9 @@ class MainActivity : ComponentActivity () {
 fun MainScreen(
     viewModel: ThemeViewModel= hiltViewModel()
 ){
-    val themeColorSheme = viewModel.isDarkTheme.collectAsState()
+    val themeColorScheme = viewModel.isDarkTheme.collectAsState()
 
-    TestAppDLTheme(darkTheme = themeColorSheme.value) {
+    TestAppDLTheme(darkTheme = themeColorScheme.value) {
         Navigation()
 
     }
@@ -92,13 +89,13 @@ fun Navigation(){
         startDestination = REGISTER_SCREEN
     ) {
         composable(REGISTER_SCREEN) {
-            LoginScreen(navigate = { route -> navigateToWithoutPopUP(route) })
+            LoginScreen(navigate = ::navigateToWithoutPopUP)
         }
         composable(MAIN_SCREEN) {
-            HomeScreen(navigate = { route -> navigateTo(route) })
+            HomeScreen(navigate = ::navigateTo)
         }
         composable(ADD_TO_DATABASE_SCREEN) {
-            AddScreen(navigate = { route -> navigateToWithoutPopUP(route) })
+            AddScreen(navigate = ::navigateToWithoutPopUP)
         }
 
         composable(
@@ -108,7 +105,7 @@ fun Navigation(){
             val itemId = backStackEntry.arguments?.getInt("itemId") ?: 0
             DetailScreen(
                 itemId = itemId,
-                navigate = { route -> navigateTo(route) }
+                navigate = ::navigateTo
             )
         }
 

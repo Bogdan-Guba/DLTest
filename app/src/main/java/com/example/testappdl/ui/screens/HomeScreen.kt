@@ -41,7 +41,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
 
-    val users: List<User> by viewModel.userData.collectAsState()
+    val users by viewModel.userData.collectAsState()
 
 
         Surface(

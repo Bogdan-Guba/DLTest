@@ -34,7 +34,7 @@ fun AddScreen(
     var name by rememberSaveable { mutableStateOf("") }
     var surname by rememberSaveable { mutableStateOf("") }
     var age by rememberSaveable { mutableStateOf("") }
-    var err by rememberSaveable { mutableStateOf("TEXT ERRPRORS") }
+    var err by rememberSaveable { mutableStateOf("TEXT ERRORS") }
 
 
 

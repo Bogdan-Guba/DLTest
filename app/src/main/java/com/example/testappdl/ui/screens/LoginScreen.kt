@@ -36,7 +36,7 @@ fun LoginScreen(
 
     var login by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
-    var error by rememberSaveable { mutableStateOf("TEXT ERRPRORS") }
+    var error by rememberSaveable { mutableStateOf("TEXT ERRORS") }
 
 
 
