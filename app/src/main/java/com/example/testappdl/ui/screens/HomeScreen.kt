@@ -1,6 +1,5 @@
 package com.example.testappdl.ui.screens
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -27,33 +25,25 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.testappdl.NavRoutes.ADD_TO_DATABASE_SCREEN
 import com.example.testappdl.NavRoutes.DETAIL_SCREEN
-import com.example.testappdl.rep.User
-import com.example.testappdl.ui.theme.DarkColorScheme
-import com.example.testappdl.ui.theme.LightColorScheme
-import com.example.testappdl.ui.theme.TestAppDLTheme
-import com.example.testappdl.ui.viewModel.MainViewModel
+import com.example.testappdl.model.User.User
+import com.example.testappdl.viewModel.HomeViewModel
 
 
 
 @Composable
-fun MainScreen(
+fun HomeScreen(
     navigate: (String) -> Unit,
-    viewModel: MainViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
 
-    val users by viewModel.userData.collectAsState()
-    val colorScheme by viewModel.colorScheme.collectAsState()
+    val users: List<User> by viewModel.userData.collectAsState()
 
-    TestAppDLTheme(colorScheme = colorScheme) {
+
         Surface(
             modifier = Modifier
                 .fillMaxSize()
@@ -101,7 +91,7 @@ fun MainScreen(
 
             }
         }
-    }
+
 }
 
 

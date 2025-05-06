@@ -3,9 +3,9 @@ package com.example.testappdl.modules
 
 import android.content.Context
 import androidx.room.Room
-import com.example.testappdl.rep.localrep.dao.UserDao
-import com.example.testappdl.rep.localrep.database.UserDatabase
-import com.example.testappdl.rep.remoteRep.ApiService
+import com.example.testappdl.model.User.localrep.dao.UserDao
+import com.example.testappdl.model.User.localrep.database.UserDatabase
+import com.example.testappdl.model.User.remoteRep.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,10 +44,10 @@ object DatabaseModule {
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): UserDatabase {
         return Room.databaseBuilder(
-            context,
-            UserDatabase::class.java,
-            "my-database"
-        ).build()
+                context,
+                UserDatabase::class.java,
+                "my-database"
+            ).build()
     }
 
 

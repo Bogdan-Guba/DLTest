@@ -1,15 +1,13 @@
-package com.example.testappdl.rep.localrep.dao
+package com.example.testappdl.model.User.localrep.dao
 
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.testappdl.rep.localrep.entity.UserRoom
-import dagger.Provides
+import com.example.testappdl.model.User.localrep.entity.UserRoom
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import retrofit2.Response
 
 
 @Dao
@@ -26,6 +24,11 @@ interface UserDao  {
 
     @Query("SELECT * FROM Users")
     fun getAll(): Flow<List<UserRoom>>
+
+
+
+    @Query("DELETE FROM Users")
+    suspend fun deleteUsers()
 
 
 

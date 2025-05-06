@@ -1,6 +1,5 @@
 package com.example.testappdl.ui.screens
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -21,15 +20,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.testappdl.NavRoutes.MAIN_SCREEN
-import com.example.testappdl.rep.User
-import com.example.testappdl.ui.theme.TestAppDLTheme
-import com.example.testappdl.ui.viewModel.DetailViewModel
+import com.example.testappdl.model.User.User
+import com.example.testappdl.viewModel.DetailViewModel
 
 
 
@@ -39,10 +34,11 @@ fun DetailScreen(
     itemId : Int,
     viewModel: DetailViewModel = hiltViewModel()
 ) {
-    val colorScheme by viewModel.colorScheme.collectAsState()
 
-    TestAppDLTheme(colorScheme = colorScheme) {
-        val user: User? = viewModel.selectedUser.collectAsState().value
+
+
+        val user: User by viewModel.selectedUser.collectAsState()
+
         Surface(
             modifier = Modifier
                 .fillMaxSize()
@@ -50,7 +46,7 @@ fun DetailScreen(
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
                 Text(
-                    text = "Name : ${user?.name}",
+                    text = "Name : ${user.name}",
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
@@ -58,7 +54,7 @@ fun DetailScreen(
                 )
 
                 Text(
-                    text = "Surname : ${user?.surname}",
+                    text = "Surname : ${user.surname}",
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
@@ -66,7 +62,7 @@ fun DetailScreen(
                 )
 
                 Text(
-                    text = "Age : ${user?.age}",
+                    text = "Age : ${user.age}",
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
@@ -85,7 +81,7 @@ fun DetailScreen(
                 }
             }
         }
-    }
+
 }
 
 

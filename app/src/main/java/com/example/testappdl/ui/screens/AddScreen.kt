@@ -14,7 +14,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -25,9 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.testappdl.NavRoutes.MAIN_SCREEN
-import com.example.testappdl.rep.localrep.entity.UserRoom
-import com.example.testappdl.ui.theme.TestAppDLTheme
-import com.example.testappdl.ui.viewModel.AddViewModel
+import com.example.testappdl.viewModel.AddViewModel
 
 @Composable
 fun AddScreen(
@@ -38,9 +35,9 @@ fun AddScreen(
     var surname by rememberSaveable { mutableStateOf("") }
     var age by rememberSaveable { mutableStateOf("") }
     var err by rememberSaveable { mutableStateOf("TEXT ERRPRORS") }
-    val colorScheme by viewModel.colorScheme.collectAsState()
 
-    TestAppDLTheme(colorScheme = colorScheme) {
+
+
         Surface(
             modifier = Modifier
                 .fillMaxSize()
@@ -86,7 +83,7 @@ fun AddScreen(
                 Button(
                     modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
                     onClick = {
-                        viewModel.addToDatabase(UserRoom(0, name, surname, age.toInt()))
+                        viewModel.addToDatabase(name, surname, age.toInt())
                         navigate(MAIN_SCREEN)
                     }) {
                     Text("Add to database")
@@ -95,7 +92,7 @@ fun AddScreen(
 
             }
         }
-    }
+
 }
 
 
