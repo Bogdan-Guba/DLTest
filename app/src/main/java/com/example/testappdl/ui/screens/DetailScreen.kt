@@ -1,5 +1,6 @@
 package com.example.testappdl.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -15,69 +16,84 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.testappdl.NavRoutes.MAIN_SCREEN
 import com.example.testappdl.rep.User
 import com.example.testappdl.ui.theme.TestAppDLTheme
-
+import com.example.testappdl.ui.viewModel.DetailViewModel
 
 
 
 @Composable
-fun DetailScreen(navController: NavController) {
-   //var user: User by rememberSaveable { mutableStateOf(User("Bogdan",0)) }
-    var user: User =User("Bogdan","Guba", 21)
-    Surface(modifier = Modifier
-        .fillMaxSize()
-        .padding(WindowInsets.statusBars.asPaddingValues())
+fun DetailScreen(
+    navigate: (String) -> Unit,
+    itemId : Int,
+    viewModel: DetailViewModel = hiltViewModel()
+) {
+    val colorScheme by viewModel.colorScheme.collectAsState()
+
+    TestAppDLTheme(colorScheme = colorScheme) {
+        val user: User? = viewModel.selectedUser.collectAsState().value
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(WindowInsets.statusBars.asPaddingValues())
         ) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            Text(
-                text="Name : ${user.name}",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally),
-                textAlign = TextAlign.Center)
-
-            Text(
-                text="Surname : ${user.surname}",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally),
-                textAlign = TextAlign.Center)
-
-            Text(text="Age : ${user.age}",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally),
-                textAlign = TextAlign.Center)
-
-            Button(onClick = { navController.navigate("main_screen")},
-                modifier = Modifier.align(Alignment.End)) {
-                Icon(
-                    imageVector = Icons.Filled.Close,
-                    contentDescription = "Close",
-                    modifier = Modifier.size(48.dp)
+            Column(modifier = Modifier.fillMaxSize()) {
+                Text(
+                    text = "Name : ${user?.name}",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally),
+                    textAlign = TextAlign.Center
                 )
+
+                Text(
+                    text = "Surname : ${user?.surname}",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally),
+                    textAlign = TextAlign.Center
+                )
+
+                Text(
+                    text = "Age : ${user?.age}",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally),
+                    textAlign = TextAlign.Center
+                )
+
+                Button(
+                    onClick = { navigate(MAIN_SCREEN) },
+                    modifier = Modifier.align(Alignment.End)
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Close,
+                        contentDescription = "Close",
+                        modifier = Modifier.size(48.dp)
+                    )
+                }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewDetailScreen() {
-    TestAppDLTheme {
 
-        DetailScreen(navController = rememberNavController())
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewDetailScreen() {
+//    TestAppDLTheme {
+//
+//        DetailScreen({})
+//    }
+//}

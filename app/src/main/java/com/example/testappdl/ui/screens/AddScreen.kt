@@ -1,6 +1,6 @@
 package com.example.testappdl.ui.screens
 
-import android.annotation.SuppressLint
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -23,23 +23,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.testappdl.NavRoutes.MAIN_SCREEN
+import com.example.testappdl.rep.localrep.entity.UserRoom
 import com.example.testappdl.ui.theme.TestAppDLTheme
-import com.example.testappdl.ui.viewModel.DetailViewModel
-import com.example.testappdl.ui.viewModel.LoginScreenViewModel
-
+import com.example.testappdl.ui.viewModel.AddViewModel
 
 @Composable
-fun LoginScreen(
+fun AddScreen(
     navigate: (String) -> Unit,
-    viewModel: LoginScreenViewModel = hiltViewModel()
-){
-
-    var login by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
-    var error by rememberSaveable { mutableStateOf("TEXT ERRPRORS") }
+    viewModel: AddViewModel =hiltViewModel()
+) {
+    var name by rememberSaveable { mutableStateOf("") }
+    var surname by rememberSaveable { mutableStateOf("") }
+    var age by rememberSaveable { mutableStateOf("") }
+    var err by rememberSaveable { mutableStateOf("TEXT ERRPRORS") }
     val colorScheme by viewModel.colorScheme.collectAsState()
 
     TestAppDLTheme(colorScheme = colorScheme) {
@@ -55,33 +53,43 @@ fun LoginScreen(
                 Text(
                     modifier = Modifier.fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
-                    text = "Welcome to my app",
+                    text = "Add user to local database",
                     textAlign = TextAlign.Center
                 )
                 TextField(
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text("Login") },
-                    onValueChange = { login = it },
-                    value = login
+                    label = { Text("Name") },
+                    onValueChange = { name = it },
+                    value = name
                 )
                 TextField(
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text("Password") },
-                    onValueChange = { password = it },
-                    value = password
+                    label = { Text("Surname") },
+                    onValueChange = { surname = it },
+                    value = surname
                 )
+                TextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Age") },
+                    onValueChange = { age = it },
+                    value = age
+                )
+
                 Text(
                     modifier = Modifier.fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
-                    text = error,
+                    text = err,
                     color = Color.Red,
                     textAlign = TextAlign.Center
                 )
 
                 Button(
                     modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
-                    onClick = { navigate(MAIN_SCREEN) }) {
-                    Text("To the next Screen")
+                    onClick = {
+                        viewModel.addToDatabase(UserRoom(0, name, surname, age.toInt()))
+                        navigate(MAIN_SCREEN)
+                    }) {
+                    Text("Add to database")
                 }
 
 
@@ -91,13 +99,3 @@ fun LoginScreen(
 }
 
 
-
-
-@Composable
-@Preview(showBackground = true)
-fun PreviewLoginScreen(){
-    TestAppDLTheme {
-        LoginScreen({})
-
-    }
-}
