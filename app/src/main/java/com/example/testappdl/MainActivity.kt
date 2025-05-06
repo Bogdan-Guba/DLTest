@@ -1,11 +1,13 @@
 package com.example.testappdl
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
@@ -17,12 +19,14 @@ import com.example.testappdl.NavRoutes.ADD_TO_DATABASE_SCREEN
 import com.example.testappdl.NavRoutes.DETAIL_SCREEN
 import com.example.testappdl.NavRoutes.MAIN_SCREEN
 import com.example.testappdl.NavRoutes.REGISTER_SCREEN
+import com.example.testappdl.rep.UserRepository
 import com.example.testappdl.ui.screens.AddScreen
 import com.example.testappdl.ui.screens.DetailScreen
 import com.example.testappdl.ui.screens.LoginScreen
 import com.example.testappdl.ui.screens.MainScreen
 import com.example.testappdl.ui.theme.TestAppDLTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 object NavRoutes {
     const val REGISTER_SCREEN = "register_screen"
@@ -36,12 +40,13 @@ class MainActivity : ComponentActivity() {
 
 
 
+    @SuppressLint("StateFlowValueCalledInComposition")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.e("TEST","NEWActivity")
         enableEdgeToEdge()
         setContent {
-            TestAppDLTheme(colorScheme = darkColorScheme()) {
+            TestAppDLTheme() {
                 Navigation()
 
             }

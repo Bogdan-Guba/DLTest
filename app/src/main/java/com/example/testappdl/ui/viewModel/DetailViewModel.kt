@@ -21,6 +21,7 @@ class DetailViewModel @Inject constructor(
 
     private val _selectedUser = MutableStateFlow<User?>(null)
     val selectedUser: StateFlow<User?> = _selectedUser
+    val colorScheme = rep.colorSheme
 
     init {
         viewModelScope.launch {

@@ -16,4 +16,9 @@ class MainViewModel @Inject constructor(
     private val rep : UserRepository
 ): ViewModel() {
     var userData = rep.users
+    var colorScheme= rep.colorSheme
+
+    fun changeTheme(){
+        rep.changeTheme()
+    }
 }

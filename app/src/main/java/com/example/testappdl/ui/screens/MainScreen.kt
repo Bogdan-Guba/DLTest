@@ -1,5 +1,6 @@
 package com.example.testappdl.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -42,6 +43,7 @@ import com.example.testappdl.ui.theme.TestAppDLTheme
 import com.example.testappdl.ui.viewModel.MainViewModel
 
 
+
 @Composable
 fun MainScreen(
     navigate: (String) -> Unit,
@@ -49,8 +51,8 @@ fun MainScreen(
 ) {
 
     val users by viewModel.userData.collectAsState()
+    val colorScheme by viewModel.colorScheme.collectAsState()
 
-    var colorScheme by remember { mutableStateOf(DarkColorScheme) }
     TestAppDLTheme(colorScheme = colorScheme) {
         Surface(
             modifier = Modifier
@@ -60,11 +62,8 @@ fun MainScreen(
             Column {
                 Row(modifier = Modifier.fillMaxWidth()) {
                     Button(
-                        onClick = { if(colorScheme == DarkColorScheme){
-                        colorScheme= LightColorScheme
-                        }else{
-                            colorScheme =DarkColorScheme
-                        }
+                        onClick = {
+                            viewModel.changeTheme()
                         },
                         modifier = Modifier.size(60.dp),
                         contentPadding = PaddingValues(0.dp)
@@ -104,6 +103,7 @@ fun MainScreen(
         }
     }
 }
+
 
     @Composable
     fun UserItem(user: User, onClick: () -> Unit) {

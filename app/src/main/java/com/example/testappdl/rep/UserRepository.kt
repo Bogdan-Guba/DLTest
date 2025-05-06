@@ -1,11 +1,14 @@
 package com.example.testappdl.rep
 
 import android.util.Log
+import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.collectAsState
 import com.example.testappdl.rep.localrep.dao.UserDao
 import com.example.testappdl.rep.localrep.entity.UserRoom
 import com.example.testappdl.rep.remoteRep.ApiService
 import com.example.testappdl.rep.remoteRep.UserRetrofit
+import com.example.testappdl.ui.theme.DarkColorScheme
+import com.example.testappdl.ui.theme.LightColorScheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -29,6 +32,9 @@ class UserRepository @Inject constructor(
     private val _users = MutableStateFlow<List<User>>(emptyList())
     val users: StateFlow<List<User>> get() = _users.asStateFlow()
 
+    private val _colorSheme = MutableStateFlow<ColorScheme>(DarkColorScheme)
+    val colorSheme: StateFlow<ColorScheme> get() = _colorSheme.asStateFlow()
+
     private var retrofitUsers: List<User> = emptyList()
 
     init {
@@ -44,6 +50,16 @@ class UserRepository @Inject constructor(
             }
 
 
+        }
+    }
+
+    fun changeTheme(){
+        if(colorSheme.value==DarkColorScheme){
+            _colorSheme.value= LightColorScheme
+        }
+        else
+        {
+            _colorSheme.value= DarkColorScheme
         }
     }
 

@@ -16,6 +16,7 @@ import kotlinx.coroutines.withContext
 class AddViewModel @Inject constructor(
     private val rep : UserRepository
 ): ViewModel() {
+    var colorScheme= rep.colorSheme
 
     fun addToDatabase(userRoom: UserRoom){
 

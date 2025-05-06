@@ -1,6 +1,6 @@
 package com.example.testappdl.ui.screens
 
-import android.view.Surface
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -14,6 +14,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -25,66 +26,74 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.testappdl.NavRoutes.MAIN_SCREEN
 import com.example.testappdl.rep.localrep.entity.UserRoom
+import com.example.testappdl.ui.theme.TestAppDLTheme
 import com.example.testappdl.ui.viewModel.AddViewModel
 
 @Composable
 fun AddScreen(
     navigate: (String) -> Unit,
     viewModel: AddViewModel =hiltViewModel()
-){
+) {
     var name by rememberSaveable { mutableStateOf("") }
     var surname by rememberSaveable { mutableStateOf("") }
     var age by rememberSaveable { mutableStateOf("") }
     var err by rememberSaveable { mutableStateOf("TEXT ERRPRORS") }
-    Surface(modifier = Modifier
-        .fillMaxSize()
-        .padding(WindowInsets.statusBars.asPaddingValues())
-    ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center
+    val colorScheme by viewModel.colorScheme.collectAsState()
+
+    TestAppDLTheme(colorScheme = colorScheme) {
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(WindowInsets.statusBars.asPaddingValues())
         ) {
-            Text(
-                modifier = Modifier.fillMaxWidth()
-                    .align(Alignment.CenterHorizontally),
-                text = "Add user to local database",
-                textAlign = TextAlign.Center
-            )
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text("Name") },
-                onValueChange = { name = it },
-                value = name
-            )
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text("Surname") },
-                onValueChange = { surname = it },
-                value = surname
-            )
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text("Age") },
-                onValueChange = { age = it },
-                value = age
-            )
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    modifier = Modifier.fillMaxWidth()
+                        .align(Alignment.CenterHorizontally),
+                    text = "Add user to local database",
+                    textAlign = TextAlign.Center
+                )
+                TextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Name") },
+                    onValueChange = { name = it },
+                    value = name
+                )
+                TextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Surname") },
+                    onValueChange = { surname = it },
+                    value = surname
+                )
+                TextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Age") },
+                    onValueChange = { age = it },
+                    value = age
+                )
 
-            Text(
-                modifier = Modifier.fillMaxWidth()
-                    .align(Alignment.CenterHorizontally),
-                text = err,
-                color = Color.Red,
-                textAlign = TextAlign.Center
-            )
+                Text(
+                    modifier = Modifier.fillMaxWidth()
+                        .align(Alignment.CenterHorizontally),
+                    text = err,
+                    color = Color.Red,
+                    textAlign = TextAlign.Center
+                )
 
-            Button(
-                modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
-                onClick = { viewModel.addToDatabase(UserRoom(0,name,surname,age.toInt()))
-                    navigate(MAIN_SCREEN) }) {
-                Text("Add to database")
+                Button(
+                    modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
+                    onClick = {
+                        viewModel.addToDatabase(UserRoom(0, name, surname, age.toInt()))
+                        navigate(MAIN_SCREEN)
+                    }) {
+                    Text("Add to database")
+                }
+
+
             }
-
-
         }
     }
 }
