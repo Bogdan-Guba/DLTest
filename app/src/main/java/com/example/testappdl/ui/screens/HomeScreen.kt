@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.testappdl.NavRoutes.ADD_TO_DATABASE_SCREEN
 import com.example.testappdl.NavRoutes.DETAIL_SCREEN
+import com.example.testappdl.component.UserItem
 import com.example.testappdl.model.User.User
 import com.example.testappdl.viewModel.HomeViewModel
 
@@ -78,22 +79,7 @@ fun HomeScreen(
 
 
 
-    @Composable
-    fun UserItem(user: User, onClick: () -> Unit) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-                .clickable { onClick.invoke() }
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text(text = "Name:${user.name}")
-                Text(text = "Surname:${user.surname}")
-                Text(text = "Age ${user.age} years old")
 
-            }
-        }
-    }
 
 //@Composable
 //@Preview(showBackground = true)
