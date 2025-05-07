@@ -30,6 +30,7 @@ import com.example.testappdl.ui.screens.AddScreen
 import com.example.testappdl.ui.screens.DetailScreen
 import com.example.testappdl.ui.screens.LoginScreen
 import com.example.testappdl.ui.screens.HomeScreen
+import com.example.testappdl.ui.screens.SettingScreen
 import com.example.testappdl.ui.theme.TestAppDLTheme
 import com.example.testappdl.viewModel.ThemeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,6 +40,7 @@ object NavRoutes {
     const val HOME_SCREEN = "main_screen"
     const val DETAIL_SCREEN = "detail_screen"
     const val ADD_TO_DATABASE_SCREEN = "add_to_base"
+    const val SETTING_SCREEN = "settings_screen"
 }
 
 @AndroidEntryPoint
@@ -76,7 +78,7 @@ fun MainScreen(
         val bottomBarRoutes = listOf(
 
             BottomNavItem.Home.route,
-            //BottomNavItem.Settings.route
+            BottomNavItem.Settings.route
 
         )
 
@@ -93,59 +95,64 @@ fun MainScreen(
 
             }
 
-        ) { paddingValues ->
+        ) { paddingValues ->NavHost(
+            navController = navController,
 
-            NavHost(
-                navController = navController,
+            startDestination = NavRoutes.REGISTER_SCREEN,
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize()
+        ) {
+            composable(NavRoutes.REGISTER_SCREEN) {
 
-                startDestination = NavRoutes.REGISTER_SCREEN,
-                modifier = Modifier
-                    .padding(paddingValues)
-                    .fillMaxSize()
-            ) {
-                composable(NavRoutes.REGISTER_SCREEN) {
-
-                    LoginScreen(
-                        navigate = {
-                            navController.navigate(NavRoutes.HOME_SCREEN) {
-                                popUpTo(NavRoutes.REGISTER_SCREEN) { inclusive = true }
-                                launchSingleTop = true
-                            }
+                LoginScreen(
+                    navigate = {
+                        navController.navigate(NavRoutes.HOME_SCREEN) {
+                            popUpTo(NavRoutes.REGISTER_SCREEN) { inclusive = true }
+                            launchSingleTop = true
                         }
-                    )
-                }
-                composable(NavRoutes.HOME_SCREEN) {
-                    HomeScreen(
-                        navigate = navController::navigate
-                    )
-                }
-
-                composable(NavRoutes.ADD_TO_DATABASE_SCREEN) {
-                    AddScreen(
-
-                        navigate = navController::navigate
-
-                    )
-                }
-
-
-                composable(
-                    "${NavRoutes.DETAIL_SCREEN}/{itemId}",
-                    arguments = listOf(navArgument("itemId") { type = NavType.IntType })
-                ) { backStackEntry ->
-                    val itemId = backStackEntry.arguments!!.getInt("itemId")
-                    DetailScreen(
-                        itemId = itemId,
-                        navigate = navController::navigate
-
-                    )
-                }
-
-
+                    }
+                )
             }
+            composable(NavRoutes.HOME_SCREEN) {
+                HomeScreen(
+                    navigate = navController::navigate
+                )
+            }
+            composable(NavRoutes.SETTING_SCREEN) {
+                SettingScreen()
+            }
+
+
+            composable(NavRoutes.ADD_TO_DATABASE_SCREEN) {
+                AddScreen(
+
+                    navigate = navController::navigate
+
+                )
+            }
+
+
+            composable(
+                "${NavRoutes.DETAIL_SCREEN}/{itemId}",
+                arguments = listOf(navArgument("itemId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val itemId = backStackEntry.arguments!!.getInt("itemId")
+                DetailScreen(
+                    itemId = itemId,
+                    navigate = navController::navigate
+
+                )
+            }
+
+
+        }
+
+
         }
     }
 }
+
 
 
 

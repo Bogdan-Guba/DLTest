@@ -17,6 +17,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.testappdl.NavRoutes.HOME_SCREEN
+import com.example.testappdl.NavRoutes.SETTING_SCREEN
 
 
 sealed class BottomNavItem(
@@ -25,7 +26,7 @@ sealed class BottomNavItem(
     val title: String
 ) {
     object Home : BottomNavItem(HOME_SCREEN, Icons.Default.Home, "Home")
-    //object Settings : BottomNavItem("settings", Icons.Default.Settings, "Settings")
+    object Settings : BottomNavItem(SETTING_SCREEN, Icons.Default.Settings, "Settings")
 
 
 }
@@ -35,13 +36,13 @@ sealed class BottomNavItem(
 fun BottomNavigationBar(navController: NavController) {
     val items = listOf(
         BottomNavItem.Home,
-        //BottomNavItem.Settings
+        BottomNavItem.Settings
 
     )
 
 
     val navBackStackEntry = navController.currentBackStackEntryAsState().value
-    // Получаем текущий Destination
+
     val currentDestination = navBackStackEntry?.destination
 
     NavigationBar {

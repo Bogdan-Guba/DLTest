@@ -41,7 +41,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
 
-    val users = viewModel.userData.collectAsState().value
+    val users by viewModel.userData.collectAsState()
 
 
 

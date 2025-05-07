@@ -41,6 +41,7 @@ class UserRepository @Inject constructor(
     suspend fun deleteAllUserData(){
         userDao.deleteUsers()
         _users.value=emptyList()
+        Log.e("TEST",_users.value.toString())
 
     }
 
