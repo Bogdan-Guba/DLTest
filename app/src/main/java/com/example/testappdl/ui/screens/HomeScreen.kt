@@ -41,14 +41,10 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
 
-    val users by viewModel.userData.collectAsState()
+    val users = viewModel.userData.collectAsState().value
 
 
-        Surface(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(WindowInsets.statusBars.asPaddingValues())
-        ) {
+
             Column {
                 Row(modifier = Modifier.fillMaxWidth()) {
                     Button(
@@ -92,7 +88,7 @@ fun HomeScreen(
             }
         }
 
-}
+
 
 
     @Composable

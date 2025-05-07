@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.testappdl.NavRoutes.MAIN_SCREEN
+import com.example.testappdl.NavRoutes.HOME_SCREEN
 import com.example.testappdl.model.User.User
 import com.example.testappdl.viewModel.DetailViewModel
 
@@ -70,7 +70,7 @@ fun DetailScreen(
                 )
 
                 Button(
-                    onClick = { navigate(MAIN_SCREEN) },
+                    onClick = { navigate(HOME_SCREEN) },
                     modifier = Modifier.align(Alignment.End)
                 ) {
                     Icon(

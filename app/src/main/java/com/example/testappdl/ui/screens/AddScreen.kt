@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.testappdl.NavRoutes.MAIN_SCREEN
+import com.example.testappdl.NavRoutes.HOME_SCREEN
 import com.example.testappdl.viewModel.AddViewModel
 
 @Composable
@@ -84,7 +84,7 @@ fun AddScreen(
                     modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
                     onClick = {
                         viewModel.addToDatabase(name, surname, age.toInt())
-                        navigate(MAIN_SCREEN)
+                        navigate(HOME_SCREEN)
                     }) {
                     Text("Add to database")
                 }
