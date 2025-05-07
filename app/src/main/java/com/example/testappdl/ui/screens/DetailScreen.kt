@@ -68,6 +68,13 @@ fun DetailScreen(
                         .align(Alignment.CenterHorizontally),
                     textAlign = TextAlign.Center
                 )
+                Text(
+                    text = "Data destination : ${user.dataDestination.mark}",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally),
+                    textAlign = TextAlign.Center
+                )
 
                 Button(
                     onClick = { navigate(HOME_SCREEN) },
