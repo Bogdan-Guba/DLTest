@@ -47,19 +47,6 @@ fun HomeScreen(
 
             Column {
                 Row(modifier = Modifier.fillMaxWidth()) {
-                    Button(
-                        onClick = {
-                            viewModel.changeTheme()
-                        },
-                        modifier = Modifier.size(60.dp),
-                        contentPadding = PaddingValues(0.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.Refresh,
-                            contentDescription = "Change theme",
-                            modifier = Modifier.size(48.dp)
-                        )
-                    }
                     Spacer(
                         modifier = Modifier.weight(1f)
                     )
@@ -86,7 +73,7 @@ fun HomeScreen(
 
 
             }
-        }
+    }
 
 
 

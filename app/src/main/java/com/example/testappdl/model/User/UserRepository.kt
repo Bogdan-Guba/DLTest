@@ -38,6 +38,12 @@ class UserRepository @Inject constructor(
         }
     }
 
+    suspend fun deleteAllUserData(){
+        userDao.deleteUsers()
+        _users.value=emptyList()
+
+    }
+
 
 
     suspend fun getUsersFromRetrofit(): List<UserRetrofit> {

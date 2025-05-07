@@ -8,14 +8,11 @@ import jakarta.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val rep : UserRepository,
-    private val themeManager: ThemeManager
+    private val rep : UserRepository
 ): ViewModel() {
     val userData = rep.users
 
-    fun changeTheme(){
-        themeManager.changeTheme()
-    }
+
 
 
 
