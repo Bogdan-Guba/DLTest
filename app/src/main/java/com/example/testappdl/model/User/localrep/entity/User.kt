@@ -9,7 +9,7 @@ data class UserRoom(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ID")
     val ID:Int=0,
-    @ColumnInfo(name = "Name" ) val name:String,
-    @ColumnInfo(name = "Surname" ) val surname:String,
-    @ColumnInfo(name = "Age" ) val age:Int
+    @ColumnInfo(name = "Name" ) val name:String="",
+    @ColumnInfo(name = "Surname" ) val surname:String="",
+    @ColumnInfo(name = "Age" ) val age:Int=0
 )
