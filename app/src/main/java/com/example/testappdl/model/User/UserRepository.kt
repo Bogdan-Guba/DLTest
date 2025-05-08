@@ -29,13 +29,15 @@ class UserRepository @Inject constructor(
     init {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val retrofitUsers = getUsersFromRetrofit().map { User.retrofitToData(it) }
-            val roomUsers = userDao.getAll().map { User.roomToData(it) }
-                val combined = (retrofitUsers + roomUsers).asReversed()
-                _users.value = combined.toMutableList()
-
-
+            updateUserRepository()
         }
+    }
+
+    suspend fun updateUserRepository(){
+        val retrofitUsers = getUsersFromRetrofit().map { User.retrofitToData(it) }
+        val roomUsers = userDao.getAll().map { User.roomToData(it) }
+        val combined = (retrofitUsers + roomUsers).asReversed()
+        _users.value = combined.toMutableList()
     }
 
     suspend fun addUser(userRoom: UserRoom){
