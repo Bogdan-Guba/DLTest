@@ -20,7 +20,7 @@ class AddViewModel @Inject constructor(
         val userRoom = UserRoom(name = name, surname=surname, age=age)
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                rep.userDao.insertUser(userRoom)
+                rep.addUser(userRoom)
             }
         }
 

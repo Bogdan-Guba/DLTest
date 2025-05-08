@@ -6,6 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.testappdl.model.User.User
 import com.example.testappdl.model.User.localrep.entity.UserRoom
 import kotlinx.coroutines.flow.Flow
 
@@ -23,12 +24,20 @@ interface UserDao  {
     }
 
     @Query("SELECT * FROM Users")
-    fun getAll(): Flow<List<UserRoom>>
+    fun getAll(): List<UserRoom>
 
 
 
     @Query("DELETE FROM Users")
     suspend fun deleteUsers()
+
+    @Query("DELETE FROM Users WHERE name = :name AND surname = :surname AND age = :age")
+    suspend fun deleteUser(name:String, surname: String,age: String)
+
+
+    suspend fun deleteUser(user:User){
+        deleteUser(user.name,user.surname, user.age.toString())
+    }
 
 
 

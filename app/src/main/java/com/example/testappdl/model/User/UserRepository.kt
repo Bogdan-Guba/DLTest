@@ -1,7 +1,9 @@
 package com.example.testappdl.model.User
 
 import android.util.Log
+import androidx.lifecycle.viewModelScope
 import com.example.testappdl.model.User.localrep.dao.UserDao
+import com.example.testappdl.model.User.localrep.entity.UserRoom
 import com.example.testappdl.model.User.remoteRep.ApiService
 import com.example.testappdl.model.User.remoteRep.UserRetrofit
 import kotlinx.coroutines.CoroutineScope
@@ -11,6 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,30 +23,48 @@ class UserRepository @Inject constructor(
      val retrofit: ApiService
 ) {
 
-    private val _users = MutableStateFlow<List<User>>(emptyList())
+    private val _users = MutableStateFlow<List<User>>(mutableListOf())
     val users: StateFlow<List<User>> get() = _users.asStateFlow()
 
     init {
 
         CoroutineScope(Dispatchers.IO).launch {
             val retrofitUsers = getUsersFromRetrofit().map { User.retrofitToData(it) }
-            userDao.getAll().map { roomList ->
-                roomList.map { User.roomToData(it) }
-            }.collect { roomUsers ->
+            val roomUsers = userDao.getAll().map { User.roomToData(it) }
                 val combined = (retrofitUsers + roomUsers).asReversed()
-                _users.value = combined
-            }
+                _users.value = combined.toMutableList()
 
 
         }
     }
 
-    suspend fun deleteAllUserData(){
-        userDao.deleteUsers()
-        _users.value=emptyList()
-        Log.e("TEST",_users.value.toString())
+    suspend fun addUser(userRoom: UserRoom){
+        userDao.insertUser(userRoom)
+        val updatedList:List<User> = _users.value.reversed() + User.roomToData(userRoom)
+        _users.value= updatedList.reversed()
+
+
+
 
     }
+
+    suspend fun deleteAllUserData(){
+        userDao.deleteUsers()
+        _users.value=mutableListOf()
+
+
+    }
+    suspend fun deleteUser(user: User){
+        if(user.dataDestination== User.DataDestination.Local){
+            userDao.deleteUser(user)
+            val updatedList = _users.value.filter { it != user }
+           _users.value= updatedList
+        }else{
+            val updatedList = _users.value.filter { it != user }
+            _users.value= updatedList
+        }
+    }
+
 
 
 
