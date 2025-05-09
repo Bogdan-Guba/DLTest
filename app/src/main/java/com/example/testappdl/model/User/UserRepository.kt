@@ -1,7 +1,6 @@
 package com.example.testappdl.model.User
 
 import android.util.Log
-import androidx.lifecycle.viewModelScope
 import com.example.testappdl.model.User.localrep.dao.UserDao
 import com.example.testappdl.model.User.localrep.entity.UserRoom
 import com.example.testappdl.model.User.remoteRep.ApiService
@@ -11,9 +10,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -34,7 +32,7 @@ class UserRepository @Inject constructor(
     }
 
     suspend fun updateUserRepository(){
-        val retrofitUsers = getUsersFromRetrofit().map { User.retrofitToData(it) }
+        val retrofitUsers = getUsersFromRetrofit().map { User.retrofitToData(it, id =UUID.randomUUID().toString()) }
         val roomUsers = userDao.getAll().map { User.roomToData(it) }
         val combined = (retrofitUsers + roomUsers).asReversed()
         _users.value = combined.toMutableList()
@@ -51,14 +49,14 @@ class UserRepository @Inject constructor(
     }
 
     suspend fun deleteAllUserData(){
-        userDao.deleteUsers()
+        userDao.deleteAllUsers()
         _users.value=mutableListOf()
 
 
     }
     suspend fun deleteUser(user: User){
-        if(user.dataDestination== User.DataDestination.Local){
-            userDao.deleteUser(user)
+        if(user.dataDestination== User.DataDestination.LOCAL){
+            userDao.deleteUserByID(user.id)
             val updatedList = _users.value.filter { it != user }
            _users.value= updatedList
         }else{

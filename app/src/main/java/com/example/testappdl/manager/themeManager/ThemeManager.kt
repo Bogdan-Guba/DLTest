@@ -16,10 +16,10 @@ class ThemeManager @Inject constructor(
     @ApplicationContext private val appContext: Context
 
 ) {
-    private val _colorScheme =
+    private val _isDarkColorSheme =
         MutableStateFlow<Boolean>(appContext.resources.configuration.isNightModeActive)
     val colorScheme: StateFlow<Boolean>
-        get() = _colorScheme.asStateFlow()
+        get() = _isDarkColorSheme.asStateFlow()
     private val _currentTheme = MutableStateFlow<ThemeOption>(System)
     val currentTheme=_currentTheme.asStateFlow()
 
@@ -27,15 +27,15 @@ class ThemeManager @Inject constructor(
     fun changeTheme(themeOption: ThemeOption) {
         when (themeOption) {
             Light -> {
-                _colorScheme.value = false
+                _isDarkColorSheme.value = false
                 _currentTheme.value = Light
             }
             Dark -> {
-                _colorScheme.value = true
+                _isDarkColorSheme.value = true
                 _currentTheme.value = Dark
             }
             System -> {
-                _colorScheme.value = appContext.resources.configuration.isNightModeActive
+                _isDarkColorSheme.value = appContext.resources.configuration.isNightModeActive
                 _currentTheme.value = System
             }
         }

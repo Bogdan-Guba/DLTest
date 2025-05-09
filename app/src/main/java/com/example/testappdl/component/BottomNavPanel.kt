@@ -52,8 +52,8 @@ fun BottomNavigationBar(navController: NavController) {
                 icon = {
                     Icon(
                         imageVector = screen.icon,
-                        contentDescription = screen.title, // Описание для Accessibility
-                        modifier = Modifier.size(24.dp) // Размер иконки
+                        contentDescription = screen.title,
+                        modifier = Modifier.size(24.dp) 
                     )
                 },
                 label = { Text(screen.title) },

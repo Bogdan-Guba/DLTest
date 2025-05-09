@@ -72,7 +72,7 @@ fun HomeScreen(
                 {
                     itemsIndexed(
                         items = users,
-                        key = { index, item -> "${item.name}_${item.surname}_${item.age}" } // Пример ключа
+                        key = { index, item -> item.id }
                     ) { idx, item ->
                         UserItem(
                             user = item,

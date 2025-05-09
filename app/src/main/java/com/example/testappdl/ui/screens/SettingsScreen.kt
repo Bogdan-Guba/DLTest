@@ -83,10 +83,10 @@ fun SettingScreen(
             },
             modifier = Modifier.fillMaxWidth(0.8f)
         ) {
-            Text("Удалить все пользовательские данные")
+            Text("Delete All User Data")
         }
 
-        // --- Версия приложения ---
-        Text(text = "Версия приложения: $appVersion", style = MaterialTheme.typography.bodySmall)
+
+        Text(text = "Application version: $appVersion", style = MaterialTheme.typography.bodySmall)
     }
 }
