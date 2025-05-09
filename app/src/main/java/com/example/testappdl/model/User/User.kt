@@ -25,9 +25,9 @@ data class User(
             )
         }
 
-        fun retrofitToData(userRetrofit: UserRetrofit,id:String): User {
+        fun retrofitToData(userRetrofit: UserRetrofit): User {
             return User(
-                id = id,
+                id = userRetrofit.email.hashCode().toString(),
                 name = userRetrofit.name.first,
                 surname = userRetrofit.name.last,
                 age = userRetrofit.dob.age,
