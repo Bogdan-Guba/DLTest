@@ -2,12 +2,11 @@ package com.example.testappdl.model.User.localrep.dao
 
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.testappdl.model.User.User
 import com.example.testappdl.model.User.localrep.entity.UserRoom
-import kotlinx.coroutines.flow.Flow
 
 
 @Dao
@@ -23,12 +22,18 @@ interface UserDao  {
     }
 
     @Query("SELECT * FROM Users")
-    fun getAll(): Flow<List<UserRoom>>
+    fun getAll(): List<UserRoom>
 
 
 
     @Query("DELETE FROM Users")
-    suspend fun deleteUsers()
+    suspend fun deleteAllUsers()
+
+    @Query("DELETE FROM Users WHERE ID = :id")
+    suspend fun deleteUserByID(id: String)
+
+
+
 
 
 

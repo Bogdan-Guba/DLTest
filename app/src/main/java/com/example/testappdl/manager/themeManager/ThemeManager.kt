@@ -1,6 +1,9 @@
 package com.example.testappdl.manager.themeManager
 
 import android.content.Context
+import com.example.testappdl.manager.themeManager.ThemeManager.ThemeOption.Dark
+import com.example.testappdl.manager.themeManager.ThemeManager.ThemeOption.Light
+import com.example.testappdl.manager.themeManager.ThemeManager.ThemeOption.System
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,12 +16,45 @@ class ThemeManager @Inject constructor(
     @ApplicationContext private val appContext: Context
 
 ) {
-    private val _colorScheme =
+    private val _isDarkColorSheme =
         MutableStateFlow<Boolean>(appContext.resources.configuration.isNightModeActive)
     val colorScheme: StateFlow<Boolean>
-        get() = _colorScheme.asStateFlow()
+        get() = _isDarkColorSheme.asStateFlow()
+    private val _currentTheme = MutableStateFlow<ThemeOption>(System)
+    val currentTheme=_currentTheme.asStateFlow()
 
-    fun changeTheme() {
-        _colorScheme.value= !_colorScheme.value
+
+    fun changeTheme(themeOption: ThemeOption) {
+        when (themeOption) {
+            Light -> {
+                _isDarkColorSheme.value = false
+                _currentTheme.value = Light
+            }
+            Dark -> {
+                _isDarkColorSheme.value = true
+                _currentTheme.value = Dark
+            }
+            System -> {
+                _isDarkColorSheme.value = appContext.resources.configuration.isNightModeActive
+                _currentTheme.value = System
+            }
+        }
+
+
     }
+
+    sealed class ThemeOption(val label: String) {
+
+        object System : ThemeOption("system")
+        object Light : ThemeOption("light")
+        object Dark : ThemeOption("dark")
+
+    }
+    companion object {
+
+        val options = listOf(System, Light, Dark)
+    }
+
 }
+
+

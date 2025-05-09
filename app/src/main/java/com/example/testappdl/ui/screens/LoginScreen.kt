@@ -23,7 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.testappdl.NavRoutes.MAIN_SCREEN
+import com.example.testappdl.NavRoutes.HOME_SCREEN
 import com.example.testappdl.ui.theme.TestAppDLTheme
 import com.example.testappdl.viewModel.LoginScreenViewModel
 
@@ -77,7 +77,7 @@ fun LoginScreen(
 
                 Button(
                     modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally),
-                    onClick = { navigate(MAIN_SCREEN) }) {
+                    onClick = { navigate(HOME_SCREEN) }) {
                     Text("To the next Screen")
                 }
 
